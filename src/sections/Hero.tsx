@@ -65,7 +65,7 @@ export default function Hero() {
               View Projects <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
             <a 
-              href="/resume.pdf" 
+              href="https://drive.google.com/file/d/1WMpGhVFcQENEwfOneiFo0hvm8ND4zJQL/view?usp=sharing" 
               target="_blank"
               className="flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-3.5 border border-border/60 bg-background/50 backdrop-blur-sm hover:bg-muted/80 rounded-xl font-semibold hover:-translate-y-0.5 transition-all duration-300 shadow-sm hover:shadow"
             >

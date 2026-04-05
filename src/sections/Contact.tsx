@@ -55,10 +55,10 @@ export default function Contact() {
             </div>
             
             <div className="mt-10 pt-10 border-t border-border flex gap-4">
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-background border border-border rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors">
+              <a href="https://www.linkedin.com/in/prabinrag2340/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-background border border-border rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors">
                 <Linkedin className="w-5 h-5" />
               </a>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-background border border-border rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors">
+              <a href="https://github.com/prabinrag234" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-background border border-border rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors">
                 <Github className="w-5 h-5" />
               </a>
             </div>

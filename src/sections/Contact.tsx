@@ -1,10 +1,50 @@
-import { motion } from 'framer-motion';
+import { useState, type FormEvent } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { SectionHeading } from '../components/SectionHeading';
-import { Mail, MapPin, Phone, Github, Linkedin, Send } from 'lucide-react';
+import { Mail, MapPin, Phone, Github, Linkedin, Send, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+
+type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
+
+function encodeForm(data: Record<string, string>) {
+  return Object.keys(data)
+    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
+    .join('&');
+}
 
 export default function Contact() {
+  const [status, setStatus] = useState<FormStatus>('idle');
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    // Honeypot: if a bot filled this hidden field, silently drop the submission.
+    if (formData.get('bot-field')) return;
+
+    setStatus('submitting');
+    try {
+      const payload: Record<string, string> = {};
+      formData.forEach((value, key) => {
+        payload[key] = String(value);
+      });
+
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: encodeForm(payload),
+      });
+
+      if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+      setStatus('success');
+      form.reset();
+    } catch {
+      setStatus('error');
+    }
+  }
+
   return (
-    <section id="contact" className="py-20 bg-muted/30">
+    <section id="contact" className="py-20 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading title="Get In Touch" subtitle="Have a question or want to work together? Let's connect." />
         
@@ -49,7 +89,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="font-semibold text-foreground">Location</p>
-                  <p>United Arab Emirates</p>
+                  <p>Kozhikode, Kerala, India — currently based in the UAE</p>
                 </div>
               </div>
             </div>
@@ -72,11 +112,12 @@ export default function Contact() {
             transition={{ duration: 0.6 }}
             className="bg-background rounded-2xl p-8 border border-border shadow-sm"
           >
-            <form 
-              name="contact" 
-              method="POST" 
-              data-netlify="true" 
+            <form
+              name="contact"
+              method="POST"
+              data-netlify="true"
               netlify-honeypot="bot-field"
+              onSubmit={handleSubmit}
               className="space-y-6"
             >
               {/* Hidden input for Netlify forms routing */}
@@ -87,50 +128,86 @@ export default function Contact() {
                   Don’t fill this out if you're human: <input name="bot-field" />
                 </label>
               </p>
-              
+
               <div>
                 <label htmlFor="name" className="block text-sm font-medium mb-2">Name</label>
-                <input 
-                  type="text" 
-                  id="name" 
-                  name="name" 
-                  required 
-                  className="w-full px-4 py-3 bg-muted/50 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  disabled={status === 'submitting'}
+                  className="w-full px-4 py-3 bg-muted/50 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all disabled:opacity-60"
                   placeholder="John Doe"
                 />
               </div>
-              
+
               <div>
                 <label htmlFor="email" className="block text-sm font-medium mb-2">Email</label>
-                <input 
-                  type="email" 
-                  id="email" 
-                  name="email" 
-                  required 
-                  className="w-full px-4 py-3 bg-muted/50 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  disabled={status === 'submitting'}
+                  className="w-full px-4 py-3 bg-muted/50 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all disabled:opacity-60"
                   placeholder="john@example.com"
                 />
               </div>
-              
+
               <div>
                 <label htmlFor="message" className="block text-sm font-medium mb-2">Message</label>
-                <textarea 
-                  id="message" 
-                  name="message" 
-                  rows={5} 
-                  required 
-                  className="w-full px-4 py-3 bg-muted/50 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={5}
+                  required
+                  disabled={status === 'submitting'}
+                  className="w-full px-4 py-3 bg-muted/50 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none disabled:opacity-60"
                   placeholder="How can I help you?"
                 ></textarea>
               </div>
-              
-              <button 
-                type="submit" 
-                className="w-full flex items-center justify-center gap-2 py-3 px-6 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-colors"
+
+              <button
+                type="submit"
+                disabled={status === 'submitting'}
+                className="w-full flex items-center justify-center gap-2 py-3 px-6 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 disabled:opacity-70 disabled:cursor-not-allowed transition-colors"
               >
-                Send Message
-                <Send className="w-4 h-4" />
+                {status === 'submitting' ? (
+                  <>
+                    Sending<Loader2 className="w-4 h-4 animate-spin" />
+                  </>
+                ) : (
+                  <>
+                    Send Message<Send className="w-4 h-4" />
+                  </>
+                )}
               </button>
+
+              <AnimatePresence mode="wait">
+                {status === 'success' && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="flex items-center gap-2 text-sm font-medium text-emerald-600 dark:text-emerald-400"
+                  >
+                    <CheckCircle2 className="w-4 h-4 shrink-0" />
+                    Thanks — your message is on its way. I'll get back to you soon.
+                  </motion.p>
+                )}
+                {status === 'error' && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="flex items-center gap-2 text-sm font-medium text-red-600 dark:text-red-400"
+                  >
+                    <AlertCircle className="w-4 h-4 shrink-0" />
+                    Something went wrong — please email me directly at prabinrag2340@gmail.com.
+                  </motion.p>
+                )}
+              </AnimatePresence>
             </form>
           </motion.div>
           

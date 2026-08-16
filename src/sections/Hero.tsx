@@ -1,14 +1,21 @@
+import { lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Download, Mail } from 'lucide-react';
+
+const HeroCanvas = lazy(() => import('../three/HeroCanvas'));
 
 export default function Hero() {
   return (
     <section id="hero" className="min-h-screen flex items-center justify-center pt-16 relative overflow-hidden bg-background">
       {/* Background decoration */}
-      <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-primary/30 rounded-full mix-blend-screen filter blur-[100px] opacity-70 animate-blob" />
-      <div className="absolute top-[20%] right-[-10%] w-96 h-96 bg-purple-500/30 rounded-full mix-blend-screen filter blur-[100px] opacity-70 animate-blob animation-delay-2000" />
-      <div className="absolute bottom-[-10%] left-[20%] w-96 h-96 bg-blue-500/30 rounded-full mix-blend-screen filter blur-[100px] opacity-70 animate-blob animation-delay-4000" />
-      
+      <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-primary/20 rounded-full mix-blend-screen filter blur-[100px] opacity-60 animate-blob" />
+      <div className="absolute bottom-[-10%] left-[20%] w-96 h-96 bg-blue-500/20 rounded-full mix-blend-screen filter blur-[100px] opacity-60 animate-blob animation-delay-4000" />
+
+      {/* Interactive 3D scene — loaded async so it never blocks first paint */}
+      <Suspense fallback={null}>
+        <HeroCanvas />
+      </Suspense>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         <div className="text-center">
           <motion.div
@@ -39,17 +46,18 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-2xl md:text-3xl font-bold text-muted-foreground mb-6"
           >
-            Software Engineer
+            Software Engineer — Mobile &amp; Cross-Platform Apps
           </motion.h2>
-          
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
             className="mt-4 text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
           >
-            Building scalable applications and seamless cross-platform experiences. 
-            Passionate about writing clean code and solving complex technical challenges.
+            I build cross-platform mobile and web apps with .NET MAUI, Xamarin and Flutter, and
+            support mission-critical Hospital Information Systems end to end. Endlessly curious
+            about computers — if it runs code, I want to know how it works.
           </motion.p>
           
           <motion.div 
@@ -64,9 +72,10 @@ export default function Hero() {
             >
               View Projects <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
-            <a 
-              href="https://drive.google.com/file/d/1WMpGhVFcQENEwfOneiFo0hvm8ND4zJQL/view?usp=sharing" 
+            <a
+              href="/Prabin-Rag-TK-CV.pdf"
               target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-3.5 border border-border/60 bg-background/50 backdrop-blur-sm hover:bg-muted/80 rounded-xl font-semibold hover:-translate-y-0.5 transition-all duration-300 shadow-sm hover:shadow"
             >
               Download CV <Download className="w-4 h-4" />

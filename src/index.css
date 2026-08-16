@@ -52,3 +52,10 @@ html {
 .animation-delay-4000 {
   animation-delay: 4s;
 }
+
+/* Custom cursor: only engaged by CustomCursor.tsx on fine-pointer (mouse) devices,
+   so touch/keyboard users always keep the native cursor. */
+html.custom-cursor-active,
+html.custom-cursor-active * {
+  cursor: none !important;
+}

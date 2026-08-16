@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { CustomCursor } from './components/CustomCursor';
 import Navbar from './sections/Navbar';
 import Hero from './sections/Hero';
 import About from './sections/About';
 import Skills from './sections/Skills';
 import Experience from './sections/Experience';
 import Projects from './sections/Projects';
+import Education from './sections/Education';
 import Contact from './sections/Contact';
 import Footer from './sections/Footer';
 
@@ -30,6 +32,7 @@ function App() {
 
   return (
     <div className="min-h-screen transition-colors duration-300">
+      <CustomCursor />
       <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
       <main>
         <Hero />
@@ -37,6 +40,7 @@ function App() {
         <Skills />
         <Experience />
         <Projects />
+        <Education />
         <Contact />
       </main>
       <Footer />

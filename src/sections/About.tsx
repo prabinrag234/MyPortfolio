@@ -1,27 +1,28 @@
 import { motion } from 'framer-motion';
 import { SectionHeading } from '../components/SectionHeading';
-import { Code2, Server, Smartphone, Users } from 'lucide-react';
+import { TiltCard } from '../components/TiltCard';
+import { HeartPulse, Smartphone, Users, Wrench } from 'lucide-react';
 
 const highlights = [
   {
-    icon: <Code2 className="w-6 h-6 text-primary" />,
-    title: "Full-Stack Expertise",
-    description: "Building end-to-to applications from scalable robust backends to interactive dynamic frontends."
-  },
-  {
     icon: <Smartphone className="w-6 h-6 text-primary" />,
-    title: "Cross-Platform",
-    description: "Crafting seamless mobile experiences across iOS and Android using modern cross-platform frameworks."
+    title: "Mobile-First Development",
+    description: "Cross-platform iOS & Android apps built with Xamarin.Forms, .NET MAUI and Flutter."
   },
   {
-    icon: <Server className="w-6 h-6 text-primary" />,
-    title: "DevOps & Cloud",
-    description: "Designing and maintaining agile CI/CD pipelines, containerized deployments, and robust server architectures."
+    icon: <HeartPulse className="w-6 h-6 text-primary" />,
+    title: "Healthcare Systems (HIS)",
+    description: "Implementation, end-user training, workflow analysis and data migration for Hospital Information Systems."
+  },
+  {
+    icon: <Wrench className="w-6 h-6 text-primary" />,
+    title: "Full Software Lifecycle",
+    description: "From MVVM/MVC architecture and SQL-backed BIRT reporting to post-go-live support and stabilization."
   },
   {
     icon: <Users className="w-6 h-6 text-primary" />,
-    title: "Agile Collaboration",
-    description: "Excelling in dynamic team environments and taking independent ownership of critical modules."
+    title: "Client-Facing Collaboration",
+    description: "Gap analysis, structured training and cross-functional coordination with clinical and technical teams."
   }
 ];
 
@@ -46,13 +47,22 @@ export default function About() {
             </h3>
             <div className="space-y-4 text-muted-foreground text-lg">
               <p>
-                As a versatile Software Engineer based in the UAE, I bring a wealth of diverse experience spanning from healthcare applications to enterprise IT infrastructures. 
+                I'm a Software Engineer currently working as a Software Implementation Engineer at
+                Tanjer Infosystems LLC in the UAE, where I support and deploy a Hospital
+                Information System (HIS) across OPD, IPD, Pharmacy, Laboratory and Billing
+                departments — from workflow analysis and data migration to post-go-live
+                stabilization and RCM insurance processes.
               </p>
               <p>
-                My fundamental philosophy is rooted in architectural resilience and clean code. I specialize in developing scalable backend systems, intuitive scalable cross-platform mobile apps, and robust API integrations that power modern businesses.
+                Before that, at Claysys Technologies, I designed and built cross-platform mobile
+                apps with Xamarin.Forms, .NET MAUI and Flutter for clients across retail, banking
+                and telecom. Mobile development is where I feel most at home, but I enjoy the full
+                stack — web apps, databases, and the systems that tie them together.
               </p>
               <p>
-                Whether I'm independently spearheading core module development or collaborating closely within an agile product team, my focus remains constant: delivering high-performance software that solves real-world challenges while ensuring an exceptional user experience.
+                Outside of work, I'm the type of person who is genuinely fascinated by computers —
+                always experimenting with new proof-of-concepts and researching emerging
+                technology, alongside gaming, photography and travel.
               </p>
             </div>
           </motion.div>
@@ -65,15 +75,16 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-background p-6 rounded-2xl shadow-sm border border-border hover:shadow-md transition-shadow"
               >
-                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
-                  {item.icon}
-                </div>
-                <h4 className="font-semibold text-lg mb-2">{item.title}</h4>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {item.description}
-                </p>
+                <TiltCard className="bg-background p-6 rounded-2xl shadow-sm border border-border hover:shadow-md transition-shadow h-full">
+                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+                    {item.icon}
+                  </div>
+                  <h4 className="font-semibold text-lg mb-2">{item.title}</h4>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {item.description}
+                  </p>
+                </TiltCard>
               </motion.div>
             ))}
           </div>

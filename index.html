@@ -2,10 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Prabin Rag TK - Software Engineer</title>
-    <meta name="description" content="Portfolio of Prabin Rag TK, a Software Engineer specializing in scalable applications and cross-platform experiences." />
+    <meta name="description" content="Portfolio of Prabin Rag TK, a Software Engineer specializing in mobile-first, cross-platform apps (Xamarin, .NET MAUI, Flutter) and Hospital Information Systems." />
     <!-- Preconnect to Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,5 +17,18 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!--
+      Netlify only registers forms it can see in the static built HTML — it can't
+      see the React-rendered form in src/sections/Contact.tsx. This hidden mirror
+      (same name + fields) is what lets Netlify detect and wire up "contact" at
+      deploy time; the visible form submits to it via fetch. Keep fields in sync.
+    -->
+    <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <textarea name="message"></textarea>
+      <input type="text" name="bot-field" />
+    </form>
   </body>
 </html>

@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
+import { MotionConfig } from 'framer-motion';
 import { CustomCursor } from './components/CustomCursor';
+import { RoleProvider } from './context/RoleContext';
 import Navbar from './sections/Navbar';
 import Hero from './sections/Hero';
 import About from './sections/About';
 import Skills from './sections/Skills';
 import Experience from './sections/Experience';
+import Process from './sections/Process';
 import Projects from './sections/Projects';
 import Education from './sections/Education';
 import Contact from './sections/Contact';
@@ -31,20 +34,25 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen transition-colors duration-300">
-      <CustomCursor />
-      <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
-      <main>
-        <Hero />
-        <About />
-        <Skills />
-        <Experience />
-        <Projects />
-        <Education />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+    <MotionConfig reducedMotion="user">
+      <RoleProvider>
+        <div className="min-h-screen transition-colors duration-300">
+          <CustomCursor />
+          <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+          <main>
+            <Hero />
+            <About />
+            <Skills />
+            <Experience />
+            <Process />
+            <Projects />
+            <Education />
+            <Contact />
+          </main>
+          <Footer />
+        </div>
+      </RoleProvider>
+    </MotionConfig>
   );
 }
 

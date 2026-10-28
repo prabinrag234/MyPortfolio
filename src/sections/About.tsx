@@ -1,40 +1,54 @@
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { SectionHeading } from '../components/SectionHeading';
 import { TiltCard } from '../components/TiltCard';
-import { HeartPulse, Smartphone, Users, Wrench } from 'lucide-react';
+import { RoleSwitch } from '../components/RoleSwitch';
+import { useRole } from '../context/RoleContext';
+import { CheckCircle2, FileBarChart, HeartPulse, Server, Smartphone } from 'lucide-react';
 
 const highlights = [
   {
     icon: <Smartphone className="w-6 h-6 text-primary" />,
-    title: "Mobile-First Development",
-    description: "Cross-platform iOS & Android apps built with Xamarin.Forms, .NET MAUI and Flutter."
+    title: "Cross-Platform Mobile",
+    description: "Android & iOS apps with .NET MAUI, Xamarin.Forms and Flutter, plus native Kotlin & Swift tuning."
   },
   {
     icon: <HeartPulse className="w-6 h-6 text-primary" />,
-    title: "Healthcare Systems (HIS)",
-    description: "Implementation, end-user training, workflow analysis and data migration for Hospital Information Systems."
+    title: "Hospital Management Systems",
+    description: "Deploying Heartbeat HMS for client hospitals — from Tomcat & MySQL setup through training and go-live."
   },
   {
-    icon: <Wrench className="w-6 h-6 text-primary" />,
-    title: "Full Software Lifecycle",
-    description: "From MVVM/MVC architecture and SQL-backed BIRT reporting to post-go-live support and stabilization."
+    icon: <Server className="w-6 h-6 text-primary" />,
+    title: "Backend & Full-Stack",
+    description: "ASP.NET Core and MERN services with REST APIs, SQL & NoSQL databases and CI/CD pipelines."
   },
   {
-    icon: <Users className="w-6 h-6 text-primary" />,
-    title: "Client-Facing Collaboration",
-    description: "Gap analysis, structured training and cross-functional coordination with clinical and technical teams."
+    icon: <FileBarChart className="w-6 h-6 text-primary" />,
+    title: "Reporting & Support",
+    description: "BIRT reports on hospital data, client–server troubleshooting and onsite support with peripheral hardware."
   }
 ];
 
 export default function About() {
+  const { role, profile } = useRole();
+
   return (
     <section id="about" className="py-20 bg-muted/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeading 
-          title="About Me" 
-          subtitle="A passionate Software Engineer with a track record of driving impact." 
+        <SectionHeading
+          title="About Me"
+          subtitle="Two sides of the same craft — building software, and making sure it lands."
         />
-        
+
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="flex justify-center"
+        >
+          <RoleSwitch id="about" />
+        </motion.div>
+
         <div className="grid lg:grid-cols-2 gap-12 items-center mt-12">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -42,35 +56,35 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h3 className="text-2xl font-bold mb-4">
-               Engineering <span className="text-primary">Reliable</span> Solutions
-            </h3>
-            <div className="space-y-4 text-muted-foreground text-lg">
-              <p>
-                I'm a Software Engineer currently working as a Software Implementation Engineer at
-                Tanjer Infosystems LLC in the UAE, where I support and deploy a Hospital
-                Information System (HIS) across OPD, IPD, Pharmacy, Laboratory and Billing
-                departments — from workflow analysis and data migration to post-go-live
-                stabilization and RCM insurance processes.
-              </p>
-              <p>
-                Before that, at Claysys Technologies, I designed and built cross-platform mobile
-                apps with Xamarin.Forms, .NET MAUI and Flutter for clients across retail, banking
-                and telecom. Mobile development is where I feel most at home, but I enjoy the full
-                stack — web apps, databases, and the systems that tie them together.
-              </p>
-              <p>
-                Outside of work, I'm the type of person who is genuinely fascinated by computers —
-                always experimenting with new proof-of-concepts and researching emerging
-                technology, alongside gaming, photography and travel.
-              </p>
-            </div>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={role}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+              >
+                <h3 className="text-2xl font-bold mb-4">
+                  {profile.heading.lead} <span className="text-primary">{profile.heading.accent}</span> {profile.heading.tail}
+                </h3>
+                <div className="space-y-4 text-muted-foreground text-lg">
+                  {profile.summary.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                  <p>
+                    Outside of work, I'm genuinely fascinated by computers — always experimenting with
+                    new proof-of-concepts and researching emerging technology, alongside gaming,
+                    photography and travel.
+                  </p>
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </motion.div>
-          
+
           <div className="grid sm:grid-cols-2 gap-6">
             {highlights.map((item, index) => (
               <motion.div
-                key={index}
+                key={item.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -88,6 +102,45 @@ export default function About() {
               </motion.div>
             ))}
           </div>
+        </div>
+
+        {/* Core competencies — swaps with the selected profile */}
+        <div className="mt-16">
+          <motion.h3
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center text-sm font-bold tracking-[0.25em] uppercase text-muted-foreground mb-6"
+          >
+            Core Competencies
+          </motion.h3>
+          <AnimatePresence mode="wait">
+            <motion.ul
+              key={role}
+              initial="hidden"
+              whileInView="show"
+              exit="hidden"
+              viewport={{ once: true }}
+              variants={{ show: { transition: { staggerChildren: 0.05 } } }}
+              className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3"
+            >
+              {profile.competencies.map((item) => (
+                <motion.li
+                  key={item}
+                  variants={{
+                    hidden: { opacity: 0, y: 12, scale: 0.97 },
+                    show: { opacity: 1, y: 0, scale: 1 },
+                  }}
+                  transition={{ duration: 0.3 }}
+                  className="flex items-center gap-3 bg-background border border-border border-l-4 border-l-teal-500 rounded-xl px-4 py-3 text-sm font-semibold shadow-sm hover:-translate-y-0.5 hover:shadow-md transition-all"
+                >
+                  <CheckCircle2 className="w-4 h-4 text-teal-500 shrink-0" />
+                  {item}
+                </motion.li>
+              ))}
+            </motion.ul>
+          </AnimatePresence>
         </div>
       </div>
     </section>

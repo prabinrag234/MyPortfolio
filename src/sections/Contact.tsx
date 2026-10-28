@@ -3,12 +3,26 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { SectionHeading } from '../components/SectionHeading';
 import { Mail, MapPin, Phone, Github, Linkedin, Send, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 
-type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
+type FormStatus = 'idle' | 'submitting' | 'success' | 'mailto' | 'error';
 
-function encodeForm(data: Record<string, string>) {
-  return Object.keys(data)
-    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
-    .join('&');
+const EMAIL = 'prabinrag2340@gmail.com';
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+// Inserts into the `contact_messages` table via Supabase's REST API. RLS only
+// allows anonymous inserts, so the public key can't read messages back.
+async function saveToSupabase(message: { name: string; email: string; message: string }) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/contact_messages`, {
+    method: 'POST',
+    headers: {
+      apikey: SUPABASE_ANON_KEY!,
+      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      'Content-Type': 'application/json',
+      Prefer: 'return=minimal',
+    },
+    body: JSON.stringify(message),
+  });
+  if (!res.ok) throw new Error(`Request failed: ${res.status}`);
 }
 
 export default function Contact() {
@@ -22,20 +36,24 @@ export default function Contact() {
     // Honeypot: if a bot filled this hidden field, silently drop the submission.
     if (formData.get('bot-field')) return;
 
+    const message = {
+      name: String(formData.get('name') ?? ''),
+      email: String(formData.get('email') ?? ''),
+      message: String(formData.get('message') ?? ''),
+    };
+
+    // No backend configured: hand off to the visitor's mail client instead.
+    if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+      const subject = encodeURIComponent(`Portfolio enquiry from ${message.name}`);
+      const body = encodeURIComponent(`${message.message}\n\n— ${message.name} (${message.email})`);
+      window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
+      setStatus('mailto');
+      return;
+    }
+
     setStatus('submitting');
     try {
-      const payload: Record<string, string> = {};
-      formData.forEach((value, key) => {
-        payload[key] = String(value);
-      });
-
-      const res = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encodeForm(payload),
-      });
-
-      if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+      await saveToSupabase(message);
       setStatus('success');
       form.reset();
     } catch {
@@ -44,7 +62,7 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="py-20 relative">
+    <section id="contact" className="py-20 relative bg-muted/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading title="Get In Touch" subtitle="Have a question or want to work together? Let's connect." />
         
@@ -57,54 +75,55 @@ export default function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h3 className="text-3xl font-bold mb-6">Let's talk about your project</h3>
+            <h3 className="text-3xl font-bold mb-6">Let's work together</h3>
             <p className="text-muted-foreground mb-8 text-lg">
-              I'm always interested in hearing about new projects, technical challenges, and opportunities.
+              I'm open to Software Engineer and Software Implementation &amp; Support roles — and always
+              happy to talk about new projects and technical challenges.
             </p>
             
             <div className="space-y-6">
-              <a href="mailto:prabinrag2340@gmail.com" className="flex items-center gap-4 text-muted-foreground hover:text-primary transition-colors group">
+              <a href={`mailto:${EMAIL}`} className="flex items-center gap-4 text-muted-foreground hover:text-primary transition-colors group">
                 <div className="w-12 h-12 bg-background border border-border rounded-full flex items-center justify-center group-hover:border-primary group-hover:bg-primary/5 transition-colors">
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
                   <p className="font-semibold text-foreground">Email</p>
-                  <p>prabinrag2340@gmail.com</p>
+                  <p>{EMAIL}</p>
                 </div>
               </a>
-              
+
               <a href="tel:+971566608834" className="flex items-center gap-4 text-muted-foreground hover:text-primary transition-colors group">
                 <div className="w-12 h-12 bg-background border border-border rounded-full flex items-center justify-center group-hover:border-primary group-hover:bg-primary/5 transition-colors">
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
                   <p className="font-semibold text-foreground">Phone</p>
-                  <p>+971 566608834</p>
+                  <p>+971 56 660 8834</p>
                 </div>
               </a>
-              
+
               <div className="flex items-center gap-4 text-muted-foreground group">
                 <div className="w-12 h-12 bg-background border border-border rounded-full flex items-center justify-center group-hover:border-primary group-hover:bg-primary/5 transition-colors">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
                   <p className="font-semibold text-foreground">Location</p>
-                  <p>Kozhikode, Kerala, India — currently based in the UAE</p>
+                  <p>Dubai, United Arab Emirates</p>
                 </div>
               </div>
             </div>
-            
+
             <div className="mt-10 pt-10 border-t border-border flex gap-4">
-              <a href="https://www.linkedin.com/in/prabinrag2340/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-background border border-border rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors">
+              <a href="https://www.linkedin.com/in/prabinrag2340/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="w-10 h-10 bg-background border border-border rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors">
                 <Linkedin className="w-5 h-5" />
               </a>
-              <a href="https://github.com/prabinrag234" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-background border border-border rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors">
+              <a href="https://github.com/classmate-projects" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="w-10 h-10 bg-background border border-border rounded-full flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors">
                 <Github className="w-5 h-5" />
               </a>
             </div>
           </motion.div>
-          
-          {/* Netlify Form */}
+
+          {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -114,14 +133,9 @@ export default function Contact() {
           >
             <form
               name="contact"
-              method="POST"
-              data-netlify="true"
-              netlify-honeypot="bot-field"
               onSubmit={handleSubmit}
               className="space-y-6"
             >
-              {/* Hidden input for Netlify forms routing */}
-              <input type="hidden" name="form-name" value="contact" />
               {/* Hidden honeypot field to prevent spam */}
               <p className="hidden">
                 <label>
@@ -196,6 +210,17 @@ export default function Contact() {
                     Thanks — your message is on its way. I'll get back to you soon.
                   </motion.p>
                 )}
+                {status === 'mailto' && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="flex items-center gap-2 text-sm font-medium text-emerald-600 dark:text-emerald-400"
+                  >
+                    <CheckCircle2 className="w-4 h-4 shrink-0" />
+                    Your email app should open with the message ready — just hit send.
+                  </motion.p>
+                )}
                 {status === 'error' && (
                   <motion.p
                     initial={{ opacity: 0, y: -6 }}
@@ -204,7 +229,7 @@ export default function Contact() {
                     className="flex items-center gap-2 text-sm font-medium text-red-600 dark:text-red-400"
                   >
                     <AlertCircle className="w-4 h-4 shrink-0" />
-                    Something went wrong — please email me directly at prabinrag2340@gmail.com.
+                    Something went wrong — please email me directly at {EMAIL}.
                   </motion.p>
                 )}
               </AnimatePresence>

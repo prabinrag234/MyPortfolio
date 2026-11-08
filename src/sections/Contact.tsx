@@ -77,8 +77,8 @@ export default function Contact() {
           >
             <h3 className="text-3xl font-bold mb-6">Let's work together</h3>
             <p className="text-muted-foreground mb-8 text-lg">
-              I'm open to Software Engineer and Software Implementation &amp; Support roles — and always
-              happy to talk about new projects and technical challenges.
+              I'm open to Software Engineer and Software Implementation &amp; Support roles — available for
+              immediate joining and open to relocation worldwide.
             </p>
             
             <div className="space-y-6">

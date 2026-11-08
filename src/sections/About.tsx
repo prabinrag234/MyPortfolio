@@ -3,28 +3,28 @@ import { SectionHeading } from '../components/SectionHeading';
 import { TiltCard } from '../components/TiltCard';
 import { RoleSwitch } from '../components/RoleSwitch';
 import { useRole } from '../context/RoleContext';
-import { CheckCircle2, FileBarChart, HeartPulse, Server, Smartphone } from 'lucide-react';
+import { CheckCircle2, HeartPulse, Server, ShieldCheck, Smartphone } from 'lucide-react';
 
 const highlights = [
   {
-    icon: <Smartphone className="w-6 h-6 text-primary" />,
-    title: "Cross-Platform Mobile",
-    description: "Android & iOS apps with .NET MAUI, Xamarin.Forms and Flutter, plus native Kotlin & Swift tuning."
+    icon: <Server className="w-6 h-6 text-primary" />,
+    title: "Backend & DevOps",
+    description: "ASP.NET Core and Node.js APIs on PostgreSQL, containerised with Docker and shipped through GitHub Actions CI/CD."
   },
   {
     icon: <HeartPulse className="w-6 h-6 text-primary" />,
-    title: "Hospital Management Systems",
-    description: "Deploying Heartbeat HMS for client hospitals — from Tomcat & MySQL setup through training and go-live."
+    title: "Healthcare Systems",
+    description: "Deployed Heartbeat HMS for UAE hospitals, and built Yoton — a multi-country hospital system and EMR."
   },
   {
-    icon: <Server className="w-6 h-6 text-primary" />,
-    title: "Backend & Full-Stack",
-    description: "ASP.NET Core and MERN services with REST APIs, SQL & NoSQL databases and CI/CD pipelines."
+    icon: <Smartphone className="w-6 h-6 text-primary" />,
+    title: "Cross-Platform Mobile",
+    description: "React Native (Expo), .NET MAUI, Xamarin.Forms and Flutter apps, with native Kotlin & Swift tuning."
   },
   {
-    icon: <FileBarChart className="w-6 h-6 text-primary" />,
-    title: "Reporting & Support",
-    description: "BIRT reports on hospital data, client–server troubleshooting and onsite support with peripheral hardware."
+    icon: <ShieldCheck className="w-6 h-6 text-primary" />,
+    title: "Security & Compliance",
+    description: "Rotating JWT refresh tokens, RBAC, field-level AES encryption, audit logs and regulator KPI reporting."
   }
 ];
 

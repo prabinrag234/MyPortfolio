@@ -1,54 +1,54 @@
 import { motion } from 'framer-motion';
 import { SectionHeading } from '../components/SectionHeading';
 import { TiltCard } from '../components/TiltCard';
-import { Cloud, Code2, Database, FileBarChart, GitBranch, Globe, Printer, Smartphone } from 'lucide-react';
+import { Cloud, Code2, Database, FlaskConical, Globe, ShieldCheck, Smartphone, Sparkles } from 'lucide-react';
 
 const skillCategories = [
   {
-    title: "Languages",
+    title: "Programming",
     icon: <Code2 className="w-5 h-5" />,
-    skills: ["C#", "Java", "JavaScript", "Python", "Dart", "SQL", "HTML5", "CSS3"]
+    skills: ["C#", "JavaScript", "TypeScript", "Python", "Dart", "Java", "SQL", "HTML5", "CSS3"]
   },
   {
-    title: "Backend & Web",
+    title: "Backend",
     icon: <Globe className="w-5 h-5" />,
-    skills: ["ASP.NET Core", "Node.js", "Express.js", "React.js", "REST APIs"]
+    skills: ["ASP.NET Core Web API (.NET 9/10)", "Entity Framework Core", "SignalR", "Node.js", "Express.js", "FastAPI", "REST API design", "OpenAPI/Swagger", "Background services"]
   },
   {
     title: "Mobile",
     icon: <Smartphone className="w-5 h-5" />,
-    skills: [".NET MAUI", "Xamarin.Forms", "Flutter", "Android (Kotlin)", "iOS (Swift)"]
-  },
-  {
-    title: "Application Servers & Hosting",
-    icon: <Cloud className="w-5 h-5" />,
-    skills: ["Apache Tomcat", "Vercel", "Railway", "Supabase", "Netlify"]
+    skills: ["React Native (Expo)", ".NET MAUI", "Xamarin.Forms", "Flutter", "Android (Kotlin)", "iOS (Swift)"]
   },
   {
     title: "Databases",
     icon: <Database className="w-5 h-5" />,
-    skills: ["MySQL Server", "MSSQL", "PostgreSQL", "MongoDB", "Supabase"]
+    skills: ["PostgreSQL", "MySQL Server", "MSSQL", "MongoDB", "Supabase (Postgres, Auth, Storage, Realtime)", "SQLite"]
   },
   {
-    title: "DevOps & Tools",
-    icon: <GitBranch className="w-5 h-5" />,
-    skills: ["Git", "Docker", "Azure DevOps", "CI/CD Pipelines"]
+    title: "DevOps & Cloud",
+    icon: <Cloud className="w-5 h-5" />,
+    skills: ["GitHub Actions", "Azure DevOps", "Docker", "Render", "Vercel", "Netlify (serverless)", "Railway", "Apache Tomcat", "CI/CD pipelines", "Git"]
   },
   {
-    title: "Reporting",
-    icon: <FileBarChart className="w-5 h-5" />,
-    skills: ["BIRT (Business Intelligence & Reporting Tools)"]
+    title: "Security",
+    icon: <ShieldCheck className="w-5 h-5" />,
+    skills: ["JWT with rotating refresh tokens", "Cookie/session auth", "RBAC", "AES field-level encryption", "bcrypt", "Rate limiting", "Audit logging"]
   },
   {
-    title: "Hardware Integration",
-    icon: <Printer className="w-5 h-5" />,
-    skills: ["Signature Pads", "Printers", "Tablets"]
+    title: "Integrations & AI",
+    icon: <Sparkles className="w-5 h-5" />,
+    skills: ["Stripe (Checkout, webhooks)", "Google Gemini", "Hugging Face Transformers", "WebRTC", "IMAP", "Brevo email"]
+  },
+  {
+    title: "Testing & Reporting",
+    icon: <FlaskConical className="w-5 h-5" />,
+    skills: ["xUnit integration testing", "Jest", "BIRT reporting", "ClosedXML (Excel reports)"]
   }
 ];
 
 const marqueeRows = [
-  ["C#", ".NET MAUI", "Xamarin.Forms", "Flutter", "ASP.NET Core", "React.js", "Node.js", "Express.js", "Kotlin", "Swift", "Dart"],
-  ["Apache Tomcat", "MySQL Server", "PostgreSQL", "MongoDB", "MSSQL", "Supabase", "BIRT", "Docker", "Azure DevOps", "Git", "Vercel"],
+  ["C#", "ASP.NET Core", "EF Core", "SignalR", "Node.js", "Express.js", "FastAPI", "React Native", "Expo", ".NET MAUI", "Flutter", "TypeScript"],
+  ["PostgreSQL", "MySQL Server", "Supabase", "MongoDB", "Docker", "GitHub Actions", "Render", "Vercel", "Stripe", "Google Gemini", "Hugging Face", "WebRTC"],
 ];
 
 function Marquee({ items, reverse = false }: { items: string[]; reverse?: boolean }) {
@@ -79,7 +79,7 @@ export default function Skills() {
   return (
     <section id="skills" className="py-20 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeading title="Technical Skills" subtitle="From mobile apps and APIs to application servers, databases and the hardware on the hospital floor." />
+        <SectionHeading title="Technical Skills" subtitle="From APIs and databases to CI/CD, security, AI integrations and the mobile apps on top." />
 
         <motion.div
           initial={{ opacity: 0 }}

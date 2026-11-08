@@ -31,13 +31,11 @@ const experiences: ExperienceItem[] = [
     },
     achievements: {
       engineer: [
-        "Deploy and configure Heartbeat hospital management software for client hospitals, from server setup through go-live.",
-        "Install and configure Apache Tomcat servers to host the Heartbeat web application securely in production.",
-        "Set up and manage the MySQL Server databases that store Heartbeat's hospital data.",
-        "Diagnose and resolve client–server communication issues across end-user machines, Tomcat and MySQL, keeping production applications stable and performant.",
-        "Design and customise BIRT reports on Heartbeat data that turn hospital operational data into clear, actionable insights.",
-        "Lead technical demonstrations and end-user training, driving smooth adoption of Heartbeat by hospital staff.",
-        "Provide onsite deployment support and troubleshooting, including integration of signature pads, printers and tablets.",
+        "Deployed and configured the Heartbeat hospital management system for client hospitals end to end, from server provisioning through go-live.",
+        "Installed and secured Apache Tomcat application servers and administered the MySQL Server databases behind Heartbeat in production.",
+        "Diagnosed and resolved client–server communication issues across end-user machines, Tomcat and MySQL, keeping production systems stable and performant.",
+        "Designed and customised BIRT reports that turn hospital operational data into actionable management insights.",
+        "Delivered technical demonstrations, end-user training and onsite support, including integration of signature pads, printers and tablets.",
       ],
       support: [
         "Implement Heartbeat hospital management software at client healthcare facilities, covering environment setup, configuration, user training and go-live.",
@@ -62,9 +60,8 @@ const experiences: ExperienceItem[] = [
       engineer: [
         "Engineered cross-platform mobile applications for Android and iOS using Xamarin.Forms, .NET MAUI and Flutter.",
         "Integrated third-party APIs and SDKs to extend application functionality and deliver new client-facing features.",
-        "Optimised native Android (Kotlin) and iOS (Swift) components to improve app performance and responsiveness.",
-        "Debugged and resolved complex multi-platform issues, strengthening application stability across platforms.",
-        "Implemented CI/CD workflows that streamlined the build and deployment process.",
+        "Optimised native Android (Kotlin) and iOS (Swift) components and resolved complex multi-platform issues, improving performance and stability.",
+        "Implemented CI/CD workflows that streamlined and standardised the build and deployment process.",
       ],
       support: [
         "Developed cross-platform mobile applications using Xamarin.Forms, .NET MAUI and Flutter.",

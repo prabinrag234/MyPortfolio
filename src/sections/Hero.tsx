@@ -42,7 +42,7 @@ export default function Hero() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
             </span>
-            Available for new opportunities
+            Available immediately · Open to relocation
             <span className="hidden sm:inline-flex items-center gap-1 text-muted-foreground">
               · <MapPin className="w-3.5 h-3.5" /> Dubai, UAE
             </span>

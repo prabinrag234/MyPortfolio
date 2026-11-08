@@ -92,13 +92,13 @@ export default function Contact() {
                 </div>
               </a>
 
-              <a href="tel:+971566608833" className="flex items-center gap-4 text-muted-foreground hover:text-primary transition-colors group">
+              <a href="tel:+971566608834" className="flex items-center gap-4 text-muted-foreground hover:text-primary transition-colors group">
                 <div className="w-12 h-12 bg-background border border-border rounded-full flex items-center justify-center group-hover:border-primary group-hover:bg-primary/5 transition-colors">
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
                   <p className="font-semibold text-foreground">Phone</p>
-                  <p>+971 56 660 8834</p>
+                  <p>+971 56 660 8833</p>
                 </div>
               </a>
 
